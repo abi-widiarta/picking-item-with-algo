@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "minecraft";
+  src: url("D:/1. KULIAH/KULIAH MATERI/SEMESTER 4/SA/SA ASSET/FONT/minecraft/Minecraft.ttf") format("truetype");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "minecraft";
+}
+
+body {
+  overflow: hidden;
+  background-image: url("../img/background.png");
+  background-position-y: -200px;
+  background-size: cover;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  outline: 2px solid red;
+}
+
+.left-container {
+  /* background-color: antiquewhite; */
+  width: 30%;
+  height: 100vh;
+  padding-top: 40px;
+  padding-left: 40px;
+}
+
+.middle-container {
+  /* background-color: aquamarine; */
+  width: 60%;
+  height: 100vh;
+}
+
+.right-container {
+  /* background-color: coral; */
+  width: 10%;
+  height: 100vh;
+}
+
+.tes {
+  /* background-color: antiquewhite; */
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
