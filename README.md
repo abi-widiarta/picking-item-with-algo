@@ -1,3 +1,3 @@
 ## Demo
 
-https://abi-widiarta.github.io/picking-item-with-algo/
+https://picking-item-with-algo.vercel.app/
