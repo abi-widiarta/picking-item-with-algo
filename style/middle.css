@@ -16,17 +16,20 @@
 }
 
 .outer-selected-items-container {
+  display: flex;
   margin-top: 80px;
+  /* outline: 1px solid yellow; */
+  width: 590px;
 }
 
 .inner-selected-items-container {
-  /* outline: 2px solid red; */
-  width: 600px;
+  width: 550px;
 }
 
 .mana-algo-container {
   display: flex;
   justify-content: space-between;
+  width: 500px;
 }
 
 .mana {
@@ -53,6 +56,8 @@
 
 .btn.btn-secondary.dropdown-toggle {
   background-image: url("../img/dropup.png");
+  display: flex;
+  justify-content: space-between;
   background-color: transparent;
   background-size: contain;
   background-repeat: no-repeat;
@@ -66,6 +71,7 @@
 }
 
 .btn.btn-secondary.dropdown-toggle img {
+  width: 16px;
   margin-bottom: 3px;
 }
 
@@ -73,19 +79,92 @@
   background-color: aquamarine;
 }
 
+.selected-items {
+  position: relative;
+}
+
+.selected-items img {
+  width: 500px;
+}
+
 .dropup .dropdown-toggle::after {
   display: none !important;
 }
 
-.dropdown-menu {
-  /* outline: 2px solid yellow; */
-}
-
 .dropdown-menu.show {
-  /* outline: 2px solid yellow; */
-  padding: 0;
+  margin: 1000px;
+  transform: translateX(76px) translateY(-30px) !important;
+  background-color: transparent;
 }
 
 .dropdown-item {
-  background-color: aqua !important;
+  background-image: url("../img/algos.png");
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none !important;
+  width: 180px !important;
+  font-size: 12px;
+  color: #fff !important;
+  letter-spacing: 1.5px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.dropdown-item:hover {
+  background-color: transparent !important;
+  cursor: pointer;
+}
+
+.go-btn {
+  display: flex;
+  align-items: end;
+  cursor: pointer;
+}
+
+.go-btn img {
+  width: 80px;
+  transition: all 150ms;
+}
+
+.go-btn:hover img {
+  width: 80px;
+  opacity: 0.8;
+  transition: all 150ms;
+}
+
+.items-box-container {
+  /* outline: 2px solid yellow; */
+  padding: 0;
+  width: 452px;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 20px;
+  left: 26px;
+}
+
+.box-container {
+  position: relative;
+  background-image: url("../img/item-box.png");
+  background-size: contain;
+  width: 48px;
+  height: 48px;
+}
+
+.box {
+  position: absolute;
+  background-image: url("../img/item-1.png");
+  background-size: contain;
+  top: 2px;
+  left: 2px;
+  width: 45px;
+  height: 45px;
+  transition: all 250ms;
+}
+
+.box:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: all 150ms;
 }
