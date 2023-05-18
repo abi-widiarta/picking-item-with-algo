@@ -1,5 +1,19 @@
+.profile {
+  position: relative;
+}
+
 .profile img {
   width: 220px;
+}
+
+.profile-char {
+  top: 10px;
+  left: 12px;
+  position: absolute;
+}
+
+.profile-char img {
+  width: 100%;
 }
 
 .rules-container img {
