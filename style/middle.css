@@ -13,6 +13,7 @@
 
 .char img {
   width: 360px;
+  animation: float 1s ease-in-out infinite;
 }
 
 .outer-selected-items-container {

@@ -1,0 +1,48 @@
+.all-items-container {
+  position: relative;
+  margin-top: 60px;
+  margin-left: 100px;
+}
+
+.all-items-container img {
+  width: 140px;
+}
+
+.all-items-box-container {
+  position: absolute;
+  overflow-y: scroll;
+  top: 112px;
+  left: 34px;
+  width: 74px;
+  height: 520px;
+  padding-top: 8px;
+  padding-left: 4px;
+  background-color: cadetblue;
+}
+
+.box-container-all {
+  position: relative;
+  background-image: url("../img/item-box.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+}
+
+.box-all {
+  position: absolute;
+  background-image: url("../img/item-1.png");
+  background-size: contain;
+  top: 2px;
+  left: 2px;
+  width: 45px;
+  height: 45px;
+  transition: all 250ms;
+}
+
+.box-all:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: all 150ms;
+}
