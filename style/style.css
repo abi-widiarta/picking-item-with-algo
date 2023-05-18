@@ -69,3 +69,48 @@ body {
     transform: translatey(0px) translatex(0px);
   }
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ead4aa;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ead4aab9;
+}
+
+.tooltip .arrow::before {
+  border-top-color: #f7f7f7 !important;
+}
+
+.tooltip .tooltip-inner {
+  background-color: #f7f7f7;
+  color: #000;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-align: start;
+  line-height: 4px;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tooltip-title {
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.tooltip-arrow::before {
+  border-left-color: #f7f7f7 !important;
+}
