@@ -34,6 +34,7 @@ let currOutline;
 boxs.forEach((element, index) => {
   element.addEventListener("click", () => {
     indexItemToSet = index;
+    currPicked = element;
 
     if (currOutline == undefined) {
       element.style.outline = "3px solid orange";
@@ -64,6 +65,8 @@ function checkExist(srcFromAllItem) {
   return exist;
 }
 
+let itemBefore;
+
 function setTest() {
   if (allowSetItem == true) {
     allItemBoxs.forEach((element, index) => {
@@ -71,13 +74,31 @@ function setTest() {
         let chosenItemFromAllItem = element.children[0].getAttribute("src");
         setAllowFalse();
         if (!checkExist(chosenItemFromAllItem)) {
-          boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
-          element.style.opacity = 0.4;
-          element.style.pointerEvents = "none";
+          if (boxs[indexItemToSet].children[0].getAttribute("src") == "") {
+            boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
 
-          let boxParent = element.parentElement;
-          boxParent.style.opacity = 0.3;
-          console.log(boxParent);
+            element.style.opacity = 0.4;
+            element.style.pointerEvents = "none";
+            itemBefore = element;
+
+            let boxParent = element.parentElement;
+            boxParent.style.opacity = 0.3;
+          } else if (boxs[indexItemToSet].children[0].getAttribute("src") != "") {
+            boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
+
+            itemBefore.style.opacity = 1;
+            itemBefore.style.pointerEvents = "all";
+
+            let itemBeforeParent = itemBefore.parentElement;
+            itemBeforeParent.style.opacity = 1;
+
+            element.style.opacity = 0.4;
+            element.style.pointerEvents = "none";
+            itemBefore = element;
+
+            let boxParent = element.parentElement;
+            boxParent.style.opacity = 0.3;
+          }
         }
       });
     });

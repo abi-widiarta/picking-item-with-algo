@@ -31,6 +31,7 @@
   display: flex;
   justify-content: space-between;
   width: 500px;
+  /* outline: 2px solid yellow; */
 }
 
 .mana {
@@ -63,10 +64,10 @@
   background-size: contain;
   background-repeat: no-repeat;
   border: none !important;
-  width: 220px;
-  height: 36px;
+  width: 260px;
+  height: 40px;
   padding-left: 16px;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 1.5px;
   text-align: start;
 }
@@ -94,7 +95,7 @@
 
 .dropdown-menu.show {
   margin: 1000px;
-  transform: translateX(76px) translateY(-30px) !important;
+  transform: translateX(124px) translateY(-30px) !important;
   background-color: transparent;
 }
 
