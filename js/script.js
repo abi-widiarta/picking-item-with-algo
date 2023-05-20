@@ -157,3 +157,55 @@ function setTest() {
     });
   }
 }
+
+// Animation
+
+const goBtn = document.querySelector(".go-btn");
+
+goBtn.addEventListener("click", goAnimation);
+
+function goAnimation() {
+  let delay = 0;
+
+  for (let i = 0; i < boxs.length; i++) {
+    const element = boxs[i];
+
+    setTimeout(() => {
+      element.style.backgroundColor = "red";
+    }, 0 + delay);
+
+    setTimeout(() => {
+      element.style.backgroundColor = "transparent";
+    }, 90 + delay);
+
+    delay += 90;
+  }
+
+  for (let i = boxs.length - 1; i >= 0; i--) {
+    const element = boxs[i];
+
+    setTimeout(() => {
+      element.style.backgroundColor = "red";
+    }, 0 + delay);
+
+    setTimeout(() => {
+      element.style.backgroundColor = "transparent";
+    }, 90 + delay);
+
+    delay += 90;
+  }
+
+  for (let i = 0; i < boxs.length; i++) {
+    const element = boxs[i];
+
+    setTimeout(() => {
+      element.style.backgroundColor = "red";
+    }, 0 + delay);
+
+    setTimeout(() => {
+      element.style.backgroundColor = "transparent";
+    }, 90 + delay);
+
+    delay += 90;
+  }
+}
