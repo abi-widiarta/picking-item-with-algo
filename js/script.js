@@ -2,35 +2,47 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
 
 const allItemsContainer = document.querySelector(".all-items-box-container");
+const boxs = document.querySelectorAll(".box");
+const allItemBoxs = document.querySelectorAll(".box-all");
 
-// class="box-all"
-// data-bs-toggle="tooltip"
-// data-bs-placement="left"
-// data-bs-html="true"
-// data-bs-title="<p class='tooltip-title'>Imperial Sword</p>
-// <p>Stat +200%</p>
-// <p>Req mana : 20</p>
-// <p>Class : Rare</p>"
-// data-bs-custom-class="custom-tooltip"
+let allowSetItem = false;
+let indexItemToSet;
 
-// const btn = document.createElement("button");
-// btn.className = "btn btn-primary";
-// btn.textContent = "Button";
+function setAllowTrue() {
+  allowSetItem = true;
+}
 
-// for (let i = 1; i <= 12; i++) {
-//   const boxContainerAll = document.createElement("div");
-//   const boxAll = document.createElement("div");
+function setAllowFalse() {
+  allowSetItem = false;
+}
 
-//   boxContainerAll.classList.add("box-container-all");
-//   boxAll.classList.add("box-all");
+boxs.forEach((element, index) => {
+  element.addEventListener("click", () => {
+    indexItemToSet = index;
+    setAllowTrue();
+    setTest();
+  });
+});
 
-//   boxAll.setAttribute("data-bs-toggle", "tooltip");
-//   boxAll.setAttribute("data-bs-placement", "left");
-//   boxAll.setAttribute("data-bs-html", "true");
-//   boxAll.setAttribute("data-bs-title", "tes");
-//   boxAll.setAttribute("data-bs-custom-class", "custom-tooltip");
+function checkExist() {
+  let imgSrcArr = [];
 
-//   boxContainerAll.append(boxAll);
+  boxs.forEach((element) => {
+    imgSrcArr.unshift(element.children[0].getAttribute("src"));
+  });
 
-//   allItemsContainer.append(boxContainerAll);
-// }
+  console.log(imgSrcArr);
+}
+
+function setTest() {
+  if (allowSetItem == true) {
+    allItemBoxs.forEach((element, index) => {
+      element.addEventListener("click", () => {
+        let chosenItemFromAllItem = element.children[0].getAttribute("src");
+        boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
+        setAllowFalse();
+        checkExist();
+      });
+    });
+  }
+}
