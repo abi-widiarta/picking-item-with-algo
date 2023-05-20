@@ -118,7 +118,6 @@ function setTest() {
         if (!checkExist(chosenItemFromAllItem)) {
           if (boxs[indexItemToSet].children[0].getAttribute("src") == "") {
             boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
-            boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
 
             element.style.opacity = 0.4;
             element.style.pointerEvents = "none";
@@ -126,9 +125,17 @@ function setTest() {
 
             let boxParent = element.parentElement;
             boxParent.style.opacity = 1;
+
+            boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
           } else if (boxs[indexItemToSet].children[0].getAttribute("src") != "") {
             boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
-            boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
+
+            let indexItemBefore = boxs[indexItemToSet].children[0].getAttribute("data-item-number");
+
+            console.log(allItemBoxs);
+            // console.log(boxs[indexItemToSet]);
+
+            itemBefore = allItemBoxs[indexItemBefore];
 
             itemBefore.style.opacity = 1;
             itemBefore.style.pointerEvents = "all";
@@ -142,6 +149,8 @@ function setTest() {
 
             let boxParent = element.parentElement;
             boxParent.style.opacity = 1;
+
+            boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
           }
         }
       });

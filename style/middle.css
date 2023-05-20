@@ -130,8 +130,16 @@
 }
 
 .go-btn:hover img {
-  width: 80px;
+  width: 84px;
+  transform: translateX(2px);
   opacity: 0.8;
+  transition: all 150ms;
+}
+
+.go-btn:active img {
+  width: 82px;
+  transform: translateX(1px);
+  opacity: 0.4;
   transition: all 150ms;
 }
 
