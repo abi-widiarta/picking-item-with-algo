@@ -161,6 +161,8 @@
   width: 45px;
   height: 45px;
   transition: all 250ms;
+  /* outline: 2px solid yellow; */
+  border-radius: 4px;
 }
 
 .box img {
