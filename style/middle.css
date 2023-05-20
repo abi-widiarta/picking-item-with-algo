@@ -175,3 +175,24 @@
   background-color: rgba(0, 0, 0, 0.2);
   transition: all 150ms;
 }
+
+.delete-item-btn {
+  position: absolute;
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  text-align: center;
+  line-height: 20px;
+  top: -8px;
+  right: -8px;
+  color: #fff;
+  pointer-events: none;
+  transition: all 150ms;
+  opacity: 0;
+}
+
+.delete-item-btn:hover {
+  opacity: 0.6 !important;
+}

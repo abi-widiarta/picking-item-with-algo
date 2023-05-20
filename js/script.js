@@ -8,11 +8,33 @@ const allItemBoxs = document.querySelectorAll(".box-all");
 const algos = document.querySelectorAll(".dropdown-item");
 const chosenAlgoUI = document.querySelector(".chosen-algo");
 
+const allDeleteBtn = document.querySelectorAll(".delete-item-btn");
+
 let chosenAlgo = "Brute force";
 chosenAlgoUI.textContent = chosenAlgo;
 
 let allowSetItem = false;
 let indexItemToSet;
+
+allDeleteBtn.forEach((element) => {
+  element.addEventListener("click", () => {
+    let indexItemPicked;
+
+    element.previousElementSibling.setAttribute("src", "");
+    // console.log(element.parentElement);
+    // console.log(element.previousElementSibling);
+    element.style.opacity = 0;
+    element.style.pointerEvents = "none";
+
+    indexItemPicked = element.previousElementSibling.getAttribute("data-item-number");
+
+    allItemBoxs[indexItemPicked].style.opacity = 1;
+    allItemBoxs[indexItemPicked].style.pointerEvents = "all";
+
+    allItemBoxs[indexItemPicked].children[0].style.opacity = 1;
+    console.log(allItemBoxs[indexItemPicked].children[0]);
+  });
+});
 
 algos.forEach((element) => {
   element.addEventListener("click", () => {
@@ -30,6 +52,26 @@ function setAllowFalse() {
 }
 
 let currOutline;
+
+boxs.forEach((element) => {
+  element.addEventListener("mouseover", () => {
+    if (element.children[0].getAttribute("src") != "") {
+      const deleteBtn = element.children[1];
+      deleteBtn.style.opacity = 1;
+      deleteBtn.style.pointerEvents = "all";
+    }
+  });
+});
+
+boxs.forEach((element) => {
+  element.addEventListener("mouseleave", () => {
+    if (element.children[0].getAttribute("src") != "") {
+      const deleteBtn = element.children[1];
+      deleteBtn.style.opacity = 0;
+      deleteBtn.style.pointerEvents = "none";
+    }
+  });
+});
 
 boxs.forEach((element, index) => {
   element.addEventListener("click", () => {
@@ -76,15 +118,17 @@ function setTest() {
         if (!checkExist(chosenItemFromAllItem)) {
           if (boxs[indexItemToSet].children[0].getAttribute("src") == "") {
             boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
+            boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
 
             element.style.opacity = 0.4;
             element.style.pointerEvents = "none";
             itemBefore = element;
 
             let boxParent = element.parentElement;
-            boxParent.style.opacity = 0.3;
+            boxParent.style.opacity = 1;
           } else if (boxs[indexItemToSet].children[0].getAttribute("src") != "") {
             boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
+            boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
 
             itemBefore.style.opacity = 1;
             itemBefore.style.pointerEvents = "all";
@@ -97,7 +141,7 @@ function setTest() {
             itemBefore = element;
 
             let boxParent = element.parentElement;
-            boxParent.style.opacity = 0.3;
+            boxParent.style.opacity = 1;
           }
         }
       });
