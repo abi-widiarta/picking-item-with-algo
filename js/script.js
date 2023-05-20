@@ -108,10 +108,6 @@ function checkExist(srcFromAllItem) {
     imgSrcArr.unshift(element.children[0].getAttribute("src"));
   });
 
-  if (!checkIsNotFull(imgSrcArr)) {
-    goListener();
-  }
-
   if (imgSrcArr.includes(srcFromAllItem)) {
     exist = true;
   }
@@ -120,6 +116,7 @@ function checkExist(srcFromAllItem) {
 }
 
 let itemBefore;
+let goFunctionCount = 0;
 
 function setTest() {
   if (allowSetItem == true) {
@@ -165,6 +162,13 @@ function setTest() {
             boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
           }
         }
+
+        if (!checkIsNotFull(imgSrcArr)) {
+          if (goFunctionCount == 0) {
+            goListener();
+            goFunctionCount++;
+          }
+        }
       });
     });
   }
@@ -175,9 +179,22 @@ function setTest() {
 const goBtn = document.querySelector(".go-btn");
 
 function goListener() {
+  // let bestItem;
+  goBtn.style.opacity = 0.98;
   goBtn.style.pointerEvents = "all";
-  goBtn.style.opacity = 1;
-  goBtn.addEventListener("click", goAnimation);
+
+  console.log("yes");
+
+  goBtn.addEventListener("click", () => {
+    boxs.forEach((element) => {
+      element.style.pointerEvents = "none";
+    });
+    goAnimation();
+    setTimeout(() => {
+      bestItem = getBestItem();
+      highlightBestItem(bestItem);
+    }, 2400);
+  });
 }
 
 function goAnimation() {
@@ -228,8 +245,18 @@ function goAnimation() {
 
 // BEST ITEMS LOGIC
 
-// if (imgSrcArr.includes("")) {
-//   console.log("tes");
-// } else {
-//   console.log("tes");
-// }
+function getBestItem() {
+  let bestItemIndex = [0, 2, 4, 6];
+  return bestItemIndex;
+}
+
+function highlightBestItem(bestItemIndex) {
+  for (let i = 0; i < boxs.length; i++) {
+    if (!bestItemIndex.includes(i)) {
+      boxs[i].style.outline = "0px solid limegreen";
+      boxs[i].parentElement.style.opacity = 0.6;
+    } else {
+      boxs[i].style.outline = "3px solid limegreen";
+    }
+  }
+}
