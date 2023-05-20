@@ -10,6 +10,8 @@ const chosenAlgoUI = document.querySelector(".chosen-algo");
 
 const allDeleteBtn = document.querySelectorAll(".delete-item-btn");
 
+const charImg = document.querySelector(".char-img");
+
 let chosenAlgo = "Brute force";
 chosenAlgoUI.textContent = chosenAlgo;
 
@@ -194,6 +196,14 @@ function goListener() {
       bestItem = getBestItem();
       highlightBestItem(bestItem);
     }, 2400);
+
+    setTimeout(() => {
+      charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
+    }, 3400);
+
+    setTimeout(() => {
+      charImg.setAttribute("src", "./img/char-idle.gif");
+    }, 9600);
   });
 }
 

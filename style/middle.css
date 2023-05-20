@@ -7,18 +7,22 @@
 }
 
 .char {
+  position: relative;
   /* margin-top: 20px; */
   margin-left: 160px;
 }
 
 .char img {
-  width: 360px;
+  position: absolute;
+  top: -60px;
+  left: -100px;
+  width: 500px;
   animation: float 1s ease-in-out infinite;
 }
 
 .outer-selected-items-container {
   display: flex;
-  margin-top: 80px;
+  margin-top: 460px;
   /* outline: 1px solid yellow; */
   width: 590px;
 }
