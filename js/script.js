@@ -92,13 +92,25 @@ boxs.forEach((element, index) => {
   });
 });
 
+let imgSrcArr;
+// let acceptGo = false;
+
+function checkIsNotFull(imgSrcArr) {
+  return imgSrcArr.includes("");
+}
+
 function checkExist(srcFromAllItem) {
-  let imgSrcArr = [];
   let exist = false;
+
+  imgSrcArr = [];
 
   boxs.forEach((element) => {
     imgSrcArr.unshift(element.children[0].getAttribute("src"));
   });
+
+  if (!checkIsNotFull(imgSrcArr)) {
+    goListener();
+  }
 
   if (imgSrcArr.includes(srcFromAllItem)) {
     exist = true;
@@ -162,7 +174,11 @@ function setTest() {
 
 const goBtn = document.querySelector(".go-btn");
 
-goBtn.addEventListener("click", goAnimation);
+function goListener() {
+  goBtn.style.pointerEvents = "all";
+  goBtn.style.opacity = 1;
+  goBtn.addEventListener("click", goAnimation);
+}
 
 function goAnimation() {
   let delay = 0;
@@ -209,3 +225,11 @@ function goAnimation() {
     delay += 90;
   }
 }
+
+// BEST ITEMS LOGIC
+
+// if (imgSrcArr.includes("")) {
+//   console.log("tes");
+// } else {
+//   console.log("tes");
+// }
