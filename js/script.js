@@ -209,6 +209,10 @@ function goListener() {
     setTimeout(() => {
       charImg.setAttribute("src", "./img/char-idle.gif");
     }, 11800);
+
+    setTimeout(() => {
+      showModal();
+    }, 11800);
   });
 }
 
@@ -326,7 +330,23 @@ function effectChosenItem() {
 
 const modalToggleBtn = document.querySelector(".modal-toggle");
 
-modalToggleBtn.click();
-
 const modalAlgo = document.querySelector(".modal-algo-use");
-modalAlgo.textContent = chosenAlgo;
+
+const boxModalAll = document.querySelectorAll(".box-modal");
+
+function showModal() {
+  populateEffectChosenItemModal();
+  modalAlgo.textContent = chosenAlgo;
+  modalToggleBtn.click();
+}
+
+function populateEffectChosenItemModal() {
+  let chosenItemSrc = extractBestItemSrc(getBestItem());
+  console.log(chosenItemSrc);
+
+  boxModalAll.forEach((element, index) => {
+    element.children[0].setAttribute("src", chosenItemSrc[index]);
+  });
+}
+
+// modalToggleBtn.click();
