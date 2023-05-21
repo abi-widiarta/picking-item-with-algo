@@ -40,7 +40,6 @@ allDeleteBtn.forEach((element) => {
 
 algos.forEach((element) => {
   element.addEventListener("click", () => {
-    console.log(element.dataset.algo);
     chosenAlgoUI.textContent = element.dataset.algo;
   });
 });
@@ -192,10 +191,16 @@ function goListener() {
       element.style.pointerEvents = "none";
     });
     goAnimation();
+
     setTimeout(() => {
       bestItem = getBestItem();
       highlightBestItem(bestItem);
     }, 2400);
+
+    setTimeout(() => {
+      effectChosenItem();
+      populateEffectChosenItem();
+    }, 3400);
 
     setTimeout(() => {
       charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
@@ -203,7 +208,7 @@ function goListener() {
 
     setTimeout(() => {
       charImg.setAttribute("src", "./img/char-idle.gif");
-    }, 9600);
+    }, 11800);
   });
 }
 
@@ -260,6 +265,19 @@ function getBestItem() {
   return bestItemIndex;
 }
 
+function extractBestItemSrc(bestItemIndex) {
+  let bestItemSrc = [];
+
+  boxs.forEach((element, index) => {
+    if (bestItemIndex.includes(index)) {
+      console.log("yes2");
+      bestItemSrc.push(element.children[0].getAttribute("src"));
+    }
+  });
+
+  return bestItemSrc;
+}
+
 function highlightBestItem(bestItemIndex) {
   for (let i = 0; i < boxs.length; i++) {
     if (!bestItemIndex.includes(i)) {
@@ -270,3 +288,45 @@ function highlightBestItem(bestItemIndex) {
     }
   }
 }
+
+// Effect
+
+const boxContainerChosen = document.querySelectorAll(".box-container-chosen");
+
+function populateEffectChosenItem() {
+  let chosenItemSrc = extractBestItemSrc(getBestItem());
+  console.log(chosenItemSrc);
+
+  boxContainerChosen.forEach((element, index) => {
+    // let stringSrc = "./img/item-" + parseInt(chosenItemSrc[index] + 1) + ".png";
+    element.children[0].children[0].setAttribute("src", chosenItemSrc[index]);
+  });
+}
+
+function effectChosenItem() {
+  let delay = 0;
+  let animDelay = 0;
+  boxContainerChosen.forEach((element) => {
+    setTimeout(() => {
+      element.style.opacity = 1;
+      element.style.transform = "translateY(-20px)";
+      // element.style.animationName = "floatPlain";
+      // element.style.animationDuration = "2s";
+      // element.style.animationIterationCount = "infinite";
+      // element.style.animationDelay = `${animDelay}s`;
+      // animation: floatPlain 2s ease-in-out infinite;
+      // animation-delay: 5s !important;
+    }, 500 + delay);
+    delay += 2000;
+    animDelay += 1;
+  });
+}
+
+// Modal
+
+const modalToggleBtn = document.querySelector(".modal-toggle");
+
+modalToggleBtn.click();
+
+const modalAlgo = document.querySelector(".modal-algo-use");
+modalAlgo.textContent = chosenAlgo;

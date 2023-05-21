@@ -12,7 +12,7 @@
   margin-left: 160px;
 }
 
-.char img {
+.char .char-img {
   position: absolute;
   top: -60px;
   left: -100px;
@@ -210,4 +210,40 @@
 
 .delete-item-btn:hover {
   opacity: 0.6 !important;
+}
+
+.chosen-wrapper {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  column-gap: 12px;
+  bottom: -420px;
+  left: 56px;
+}
+
+.box-container-chosen {
+  position: relative;
+  background-image: url("../img/chosen-item.png");
+  background-size: contain;
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  transition: 500ms;
+  transform: translateY(20px);
+}
+
+.box-chosen {
+  position: absolute;
+  background-size: contain;
+  top: 2px;
+  left: 2px;
+  width: 45px;
+  height: 45px;
+  transition: all 250ms;
+  /* outline: 2px solid yellow; */
+  border-radius: 4px;
+}
+
+.box-chosen img {
+  width: 100%;
 }

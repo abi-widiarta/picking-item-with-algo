@@ -70,6 +70,18 @@ body {
   }
 }
 
+@keyframes floatPlain {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-10px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -113,4 +125,9 @@ body {
 
 .tooltip-arrow::before {
   border-left-color: #f7f7f7 !important;
+}
+
+/* Modal */
+.modal-toggle {
+  visibility: hidden;
 }
