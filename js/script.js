@@ -7,6 +7,7 @@ const allItemBoxs = document.querySelectorAll(".box-all");
 
 const algos = document.querySelectorAll(".dropdown-item");
 const chosenAlgoUI = document.querySelector(".chosen-algo");
+const dropDown = document.querySelector(".dropdown-toggle");
 
 const allDeleteBtn = document.querySelectorAll(".delete-item-btn");
 
@@ -186,16 +187,18 @@ function goListener() {
   goBtn.style.opacity = 0.98;
   goBtn.style.pointerEvents = "all";
 
-  console.log("yes");
-
   goBtn.addEventListener("click", () => {
     boxs.forEach((element) => {
       element.style.pointerEvents = "none";
     });
 
+    allItemBoxs.forEach((element) => {
+      element.style.pointerEvents = "none";
+    });
+
     goBtn.style.opacity = 0.4;
     goBtn.style.pointerEvents = "none";
-    chosenAlgoUI.parentElement.parentElement.pointerEvents = "none";
+    dropDown.setAttribute("disabled", "");
 
     goAnimation();
 
