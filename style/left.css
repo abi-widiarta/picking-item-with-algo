@@ -7,9 +7,11 @@
 }
 
 .profile-char {
-  top: 10px;
-  left: 12px;
+  /* outline: 1px solid white; */
+  top: 14px;
+  left: 14px;
   position: absolute;
+  width: 50px;
 }
 
 .profile-char img {

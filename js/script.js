@@ -11,6 +11,7 @@ const chosenAlgoUI = document.querySelector(".chosen-algo");
 const allDeleteBtn = document.querySelectorAll(".delete-item-btn");
 
 const charImg = document.querySelector(".char-img");
+const charImgAvatar = document.querySelector(".char-img-avatar");
 
 let chosenAlgo = "Brute force";
 chosenAlgoUI.textContent = chosenAlgo;
@@ -41,6 +42,7 @@ allDeleteBtn.forEach((element) => {
 algos.forEach((element) => {
   element.addEventListener("click", () => {
     chosenAlgoUI.textContent = element.dataset.algo;
+    chosenAlgo = element.dataset.algo;
   });
 });
 
@@ -80,11 +82,11 @@ boxs.forEach((element, index) => {
     currPicked = element;
 
     if (currOutline == undefined) {
-      element.style.outline = "3px solid orange";
+      element.style.outline = "4px solid orange";
       currOutline = element;
     } else {
       currOutline.style.outline = "0px solid orange";
-      element.style.outline = "3px solid orange";
+      element.style.outline = "4px solid orange";
       currOutline = element;
     }
 
@@ -190,6 +192,11 @@ function goListener() {
     boxs.forEach((element) => {
       element.style.pointerEvents = "none";
     });
+
+    goBtn.style.opacity = 0.4;
+    goBtn.style.pointerEvents = "none";
+    chosenAlgoUI.parentElement.parentElement.pointerEvents = "none";
+
     goAnimation();
 
     setTimeout(() => {
@@ -204,10 +211,14 @@ function goListener() {
 
     setTimeout(() => {
       charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
+      charImg.style.animationName = "";
+      charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
     }, 3400);
 
     setTimeout(() => {
+      charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
       charImg.setAttribute("src", "./img/char-idle.gif");
+      charImg.style.animationName = float;
     }, 11800);
 
     setTimeout(() => {
@@ -288,7 +299,7 @@ function highlightBestItem(bestItemIndex) {
       boxs[i].style.outline = "0px solid limegreen";
       boxs[i].parentElement.style.opacity = 0.6;
     } else {
-      boxs[i].style.outline = "3px solid limegreen";
+      boxs[i].style.outline = "5px solid limegreen";
     }
   }
 }
@@ -302,7 +313,6 @@ function populateEffectChosenItem() {
   console.log(chosenItemSrc);
 
   boxContainerChosen.forEach((element, index) => {
-    // let stringSrc = "./img/item-" + parseInt(chosenItemSrc[index] + 1) + ".png";
     element.children[0].children[0].setAttribute("src", chosenItemSrc[index]);
   });
 }
@@ -314,12 +324,6 @@ function effectChosenItem() {
     setTimeout(() => {
       element.style.opacity = 1;
       element.style.transform = "translateY(-20px)";
-      // element.style.animationName = "floatPlain";
-      // element.style.animationDuration = "2s";
-      // element.style.animationIterationCount = "infinite";
-      // element.style.animationDelay = `${animDelay}s`;
-      // animation: floatPlain 2s ease-in-out infinite;
-      // animation-delay: 5s !important;
     }, 500 + delay);
     delay += 2000;
     animDelay += 1;
@@ -342,11 +346,24 @@ function showModal() {
 
 function populateEffectChosenItemModal() {
   let chosenItemSrc = extractBestItemSrc(getBestItem());
-  console.log(chosenItemSrc);
 
   boxModalAll.forEach((element, index) => {
     element.children[0].setAttribute("src", chosenItemSrc[index]);
   });
 }
 
-// modalToggleBtn.click();
+// Buff stat
+
+const statBuff = document.querySelector(".stat-buff-container");
+const closeModalBtn = document.querySelector(".close-modal-btn");
+
+function showBuffStat() {
+  statBuff.style.transform = "translateY(-20px)";
+  statBuff.style.opacity = 1;
+}
+
+closeModalBtn.addEventListener("click", () => {
+  setTimeout(() => {
+    showBuffStat();
+  }, 350);
+});
