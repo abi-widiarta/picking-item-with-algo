@@ -83,11 +83,11 @@ boxs.forEach((element, index) => {
     currPicked = element;
 
     if (currOutline == undefined) {
-      element.style.outline = "4px solid orange";
+      element.style.outline = "4px solid white";
       currOutline = element;
     } else {
-      currOutline.style.outline = "0px solid orange";
-      element.style.outline = "4px solid orange";
+      currOutline.style.outline = "0px solid white";
+      element.style.outline = "4px solid white";
       currOutline = element;
     }
 
