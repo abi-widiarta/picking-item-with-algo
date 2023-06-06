@@ -22,7 +22,6 @@
 
 .box-container-all {
   position: relative;
-  background-image: url("../img/item-box.png");
   background-size: cover;
   background-repeat: no-repeat;
   width: 48px;
@@ -30,7 +29,41 @@
   margin-bottom: 10px;
 }
 
+.box-container-all:nth-child(1),
+.box-container-all:nth-child(2),
+.box-container-all:nth-child(3),
+.box-container-all:nth-child(4) {
+  background-image: url("../img/item-box-normal.png");
+}
+
+.box-container-all:nth-child(5),
+.box-container-all:nth-child(6),
+.box-container-all:nth-child(7),
+.box-container-all:nth-child(8) {
+  background-image: url("../img/item-box-rare.png");
+}
+
+.box-container-all:nth-child(9),
+.box-container-all:nth-child(10),
+.box-container-all:nth-child(11),
+.box-container-all:nth-child(12) {
+  background-image: url("../img/item-box-epic.png");
+}
+
+.box-container-all:nth-child(13),
+.box-container-all:nth-child(14),
+.box-container-all:nth-child(15),
+.box-container-all:nth-child(16) {
+  background-image: url("../img/item-box-legendary.png");
+  box-shadow: -1px -2px 23px -3px rgba(255, 18, 18, 1);
+  -webkit-box-shadow: -1px -2px 23px -3px rgba(255, 18, 18, 1);
+  -moz-box-shadow: -1px -2px 23px -3px rgba(255, 18, 18, 1);
+}
+
 .box-all {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   background-size: contain;
   top: 2px;
@@ -41,7 +74,7 @@
 }
 
 .box-all img {
-  width: 100%;
+  width: 78%;
 }
 
 .box-all:hover {
