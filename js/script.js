@@ -122,6 +122,10 @@ function disableOtherTier(tier) {
       if (element.getAttribute("data-tier") == tier) {
         element.parentElement.style.pointerEvents = "all";
         element.parentElement.style.opacity = "1";
+
+        if (element.style.opacity == "0.4") {
+          element.parentElement.style.opacity = "0.4";
+        }
       }
     });
 
@@ -160,6 +164,7 @@ function checkExist(srcFromAllItem) {
 
 let itemBefore;
 let goFunctionCount = 0;
+let currItemParent;
 
 function setTest() {
   if (allowSetItem == true) {
@@ -171,20 +176,20 @@ function setTest() {
           if (boxs[indexItemToSet].children[0].getAttribute("src") == "") {
             boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
 
-            element.style.opacity = 0.4;
+            element.style.opacity = "0.4";
             element.style.pointerEvents = "none";
-            itemBefore = element;
+            currItemParent = element.parentElement;
+            console.log(currItemParent);
 
-            let boxParent = element.parentElement;
-            boxParent.style.opacity = 1;
+            currItemParent.style.opacity = "0.4";
+
+            itemBefore = element;
 
             boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
           } else if (boxs[indexItemToSet].children[0].getAttribute("src") != "") {
             boxs[indexItemToSet].children[0].setAttribute("src", chosenItemFromAllItem);
 
             let indexItemBefore = boxs[indexItemToSet].children[0].getAttribute("data-item-number");
-
-            console.log(allItemBoxs);
 
             itemBefore = allItemBoxs[indexItemBefore];
 
@@ -194,12 +199,13 @@ function setTest() {
             let itemBeforeParent = itemBefore.parentElement;
             itemBeforeParent.style.opacity = 1;
 
-            element.style.opacity = 0.4;
+            element.style.opacity = "0.4";
             element.style.pointerEvents = "none";
-            itemBefore = element;
+            currItemParent = element.parentElement;
 
-            let boxParent = element.parentElement;
-            boxParent.style.opacity = 1;
+            currItemParent.style.opacity = "0.4";
+
+            itemBefore = element;
 
             boxs[indexItemToSet].children[0].setAttribute("data-item-number", index);
           }
