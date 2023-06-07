@@ -25,8 +25,6 @@ allDeleteBtn.forEach((element) => {
     let indexItemPicked;
 
     element.previousElementSibling.setAttribute("src", "");
-    // console.log(element.parentElement);
-    // console.log(element.previousElementSibling);
     element.style.opacity = 0;
     element.style.pointerEvents = "none";
 
@@ -82,6 +80,12 @@ boxs.forEach((element, index) => {
     indexItemToSet = index;
     currPicked = element;
 
+    console.log(element.getAttribute("data-tier"));
+    disableOtherTier(element.getAttribute("data-tier"));
+
+    // console.log(allItemBoxs.getAttribute("data-tier"));
+    // console.log(Array.from(allItemBoxs));
+
     if (currOutline == undefined) {
       element.style.outline = "4px solid white";
       currOutline = element;
@@ -96,8 +100,43 @@ boxs.forEach((element, index) => {
   });
 });
 
+let prevtier;
+function disableOtherTier(tier) {
+  if (prevtier == undefined) {
+    allItemBoxs.forEach((element) => {
+      if (element.getAttribute("data-tier") != tier) {
+        element.parentElement.style.pointerEvents = "none";
+        element.parentElement.style.opacity = "0.4";
+      }
+    });
+  } else if (prevtier == tier) {
+    allItemBoxs.forEach((element) => {
+      if (element.getAttribute("data-tier") != tier) {
+        element.parentElement.style.pointerEvents = "none";
+        element.parentElement.style.opacity = "0.4";
+      }
+    });
+  } else if (prevtier != tier) {
+    console.log("yes");
+    allItemBoxs.forEach((element) => {
+      if (element.getAttribute("data-tier") == tier) {
+        element.parentElement.style.pointerEvents = "all";
+        element.parentElement.style.opacity = "1";
+      }
+    });
+
+    allItemBoxs.forEach((element) => {
+      if (element.getAttribute("data-tier") != tier) {
+        element.parentElement.style.pointerEvents = "none";
+        element.parentElement.style.opacity = "0.4";
+      }
+    });
+  }
+
+  prevtier = tier;
+}
+
 let imgSrcArr;
-// let acceptGo = false;
 
 function checkIsNotFull(imgSrcArr) {
   return imgSrcArr.includes("");
@@ -146,7 +185,6 @@ function setTest() {
             let indexItemBefore = boxs[indexItemToSet].children[0].getAttribute("data-item-number");
 
             console.log(allItemBoxs);
-            // console.log(boxs[indexItemToSet]);
 
             itemBefore = allItemBoxs[indexItemBefore];
 
@@ -183,7 +221,6 @@ function setTest() {
 const goBtn = document.querySelector(".go-btn");
 
 function goListener() {
-  // let bestItem;
   goBtn.style.opacity = 0.98;
   goBtn.style.pointerEvents = "all";
 
