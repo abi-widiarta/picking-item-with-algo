@@ -42,32 +42,11 @@
 
         <div class="char">
           <img class="char-img" src="./img/char-idle.gif" alt="" />
-          <div class="chosen-wrapper">
-            <!-- <div class="box-container-chosen">
-              <div class="box-chosen">
-                <img src="./img/item-1.png" alt="" />
-              </div>
-            </div>
-            <div class="box-container-chosen">
-              <div class="box-chosen">
-                <img src="./img/item-2.png" alt="" />
-              </div>
-            </div>
-            <div class="box-container-chosen">
-              <div class="box-chosen">
-                <img src="./img/item-1.png" alt="" />
-              </div>
-            </div>
-            <div class="box-container-chosen">
-              <div class="box-chosen">
-                <img src="./img/item-1.png" alt="" />
-              </div>
-            </div> -->
-          </div>
+          <div class="chosen-wrapper"></div>
           <div class="stat-buff-container">
             <div class="stat-buff-container-value-container">
               <img src="./img/stat-buff.png" alt="" />
-              <p class="stat-buff-text">Stat +270%</p>
+              <p class="stat-buff-text">Stat +<span class="char-final-stat"></span>%</p>
             </div>
             <img class="stat-buff-arrow" src="./img/stat-buff-arrow.png" alt="" />
           </div>
@@ -154,8 +133,11 @@
               </div>
             </div>
           </div>
-          <div class="go-btn">
-            <img src="./img/go.png" alt="" />
+          <div class="go-reset-wrapper">
+            <img class="reset-btn" src="./img/reset-btn.png" alt="" />
+            <div class="go-btn">
+              <img src="./img/go.png" alt="" />
+            </div>
           </div>
         </div>
       </div>
@@ -509,9 +491,9 @@
           <div class="modal-body">
             <div class="all-box-modal-container"></div>
             <div class="detail-buff">
-              <p>Total Buff : <span class="final-stat"></span></p>
-              <p>Required Mana : <span class="final-mana"></span></p>
-              <p>Execution Time : <span class="final-time"></span></p>
+              <p>Total Buff &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="final-stat"></span></p>
+              <p>Required Mana &nbsp;: <span class="final-mana"></span></p>
+              <p>Execution Time : <span class="final-time"></span> ms</p>
             </div>
           </div>
           <div class="modal-footer">

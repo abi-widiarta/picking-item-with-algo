@@ -18,6 +18,11 @@ const itemChosenWrapper = document.querySelector(".chosen-wrapper");
 
 const finalStatModal = document.querySelector(".final-stat");
 const finalManaModal = document.querySelector(".final-mana");
+const finalTimeModal = document.querySelector(".final-time");
+
+const charFinalStat = document.querySelector(".char-final-stat");
+
+const resetBtn = document.querySelector(".reset-btn");
 
 let chosenAlgo = "Brute force";
 chosenAlgoUI.textContent = chosenAlgo;
@@ -44,6 +49,9 @@ allDeleteBtn.forEach((element) => {
     allItemBoxs[indexItemPicked].parentElement.style.opacity = 1;
 
     allItemBoxs[indexItemPicked].children[0].style.opacity = 1;
+
+    goBtn.style.opacity = "0.6";
+    goBtn.style.pointerEvents = "none";
   });
 });
 
@@ -84,13 +92,19 @@ boxs.forEach((element) => {
   });
 });
 
+let isReset = 0;
+
 boxs.forEach((element, index) => {
   element.addEventListener("click", () => {
     indexItemToSet = index;
     currPicked = element;
 
-    console.log(element.getAttribute("data-tier"));
+    // console.log(element.getAttribute("data-tier"));
     disableOtherTier(element.getAttribute("data-tier"));
+
+    if (isReset > 0) {
+      enableChosenTier(element.getAttribute("data-tier"));
+    }
 
     if (currOutline == undefined) {
       element.style.outline = "4px solid white";
@@ -105,6 +119,16 @@ boxs.forEach((element, index) => {
     setTest();
   });
 });
+
+function enableChosenTier(tier) {
+  allItemBoxs.forEach((element) => {
+    if (element.getAttribute("data-tier") == tier) {
+      console.log("yes2");
+      element.parentElement.style.pointerEvents = "all";
+      element.style.pointerEvents = "all";
+    }
+  });
+}
 
 let prevtier;
 function disableOtherTier(tier) {
@@ -242,10 +266,8 @@ function setTest() {
         }
 
         if (!checkIsNotFull(imgSrcArr)) {
-          if (goFunctionCount == 0) {
-            goListener();
-            goFunctionCount++;
-          }
+          goBtn.style.opacity = 0.98;
+          goBtn.style.pointerEvents = "all";
         }
       });
     });
@@ -255,103 +277,107 @@ function setTest() {
 // Animation
 
 const goBtn = document.querySelector(".go-btn");
-let allSelectedItems = [];
+let allSelectedItems;
+let startTime;
+let finalTime;
 
-function goListener() {
-  goBtn.style.opacity = 0.98;
-  goBtn.style.pointerEvents = "all";
+goBtn.addEventListener("click", () => {
+  allSelectedItems = [];
 
-  goBtn.addEventListener("click", () => {
-    boxs.forEach((element) => {
-      allSelectedItems.push({ Name: element.getAttribute("data-item-name"), Tier: element.getAttribute("data-tier"), Value: Number(element.getAttribute("data-stat")), Weight: Number(element.getAttribute("data-mana")) });
-    });
+  boxs.forEach((element) => {
+    allSelectedItems.push({ Name: element.getAttribute("data-item-name"), Tier: element.getAttribute("data-tier"), Value: Number(element.getAttribute("data-stat")), Weight: Number(element.getAttribute("data-mana")) });
+  });
 
-    if (chosenAlgo == "D.programming") {
-      masterDynamicP(allSelectedItems);
-    } else if (chosenAlgo == "Brute force") {
-      masterBruteForce(allSelectedItems);
-    } else if (chosenAlgo == "Greedy") {
-      masterGreedy(allSelectedItems);
-    }
+  console.log("all selected items : ", allSelectedItems);
 
-    boxs.forEach((element) => {
-      element.style.pointerEvents = "none";
-    });
+  if (chosenAlgo == "D.programming") {
+    startTime = performance.now();
+    masterDynamicP(allSelectedItems);
+    finalTime = performance.now() - startTime;
+  } else if (chosenAlgo == "Brute force") {
+    startTime = performance.now();
+    masterBruteForce(allSelectedItems);
+    finalTime = performance.now() - startTime;
+  } else if (chosenAlgo == "Greedy") {
+    startTime = performance.now();
+    masterGreedy(allSelectedItems);
+    finalTime = performance.now() - startTime;
+  }
 
-    allItemBoxs.forEach((element) => {
-      element.style.pointerEvents = "none";
-    });
+  boxs.forEach((element) => {
+    element.style.pointerEvents = "none";
+  });
 
-    goBtn.style.opacity = 0.4;
-    goBtn.style.pointerEvents = "none";
-    dropDown.setAttribute("disabled", "");
+  allItemBoxs.forEach((element) => {
+    element.style.pointerEvents = "none";
+  });
 
-    goAnimation();
+  goBtn.style.opacity = 0.4;
+  goBtn.style.pointerEvents = "none";
+  dropDown.setAttribute("disabled", "");
 
+  goAnimation();
+
+  setTimeout(() => {
+    highlightBestItem(chosenItemIndex);
+    createBoxChosenItem();
+  }, 2400);
+
+  setTimeout(() => {
+    effectChosenItem();
+    populateEffectChosenItem();
+  }, 3400);
+
+  if (chosenItemIndex.length == 4) {
     setTimeout(() => {
-      highlightBestItem(chosenItemIndex);
-      createBoxChosenItem();
-    }, 2400);
-
-    setTimeout(() => {
-      effectChosenItem();
-      populateEffectChosenItem();
+      charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
+      charImg.style.animationName = "";
+      charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
     }, 3400);
 
-    if (chosenItemIndex.length == 4) {
-      console.log("4");
-      setTimeout(() => {
-        charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
-        charImg.style.animationName = "";
-        charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
-      }, 3400);
+    setTimeout(() => {
+      charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
+      charImg.setAttribute("src", "./img/char-idle.gif");
+      charImg.style.animationName = "float";
+    }, 11800);
 
-      setTimeout(() => {
-        charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
-        charImg.setAttribute("src", "./img/char-idle.gif");
-        charImg.style.animationName = "float";
-      }, 11800);
+    setTimeout(() => {
+      showModal();
+    }, 11800);
+  } else if (chosenItemIndex.length == 3) {
+    setTimeout(() => {
+      charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
+      charImg.style.animationName = "";
+      charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
+    }, 3400);
 
-      setTimeout(() => {
-        showModal();
-      }, 11800);
-    } else if (chosenItemIndex.length == 3) {
-      console.log("3");
-      setTimeout(() => {
-        charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
-        charImg.style.animationName = "";
-        charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
-      }, 3400);
+    setTimeout(() => {
+      charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
+      charImg.setAttribute("src", "./img/char-idle.gif");
+      charImg.style.animationName = "float";
+    }, 9800);
 
-      setTimeout(() => {
-        charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
-        charImg.setAttribute("src", "./img/char-idle.gif");
-        charImg.style.animationName = "float";
-      }, 9800);
+    setTimeout(() => {
+      showModal();
+    }, 9800);
+  } else if (chosenItemIndex.length == 2) {
+    setTimeout(() => {
+      charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
+      charImg.style.animationName = "";
+      charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
+    }, 3400);
 
-      setTimeout(() => {
-        showModal();
-      }, 9800);
-    } else if (chosenItemIndex.length == 2) {
-      console.log("3");
-      setTimeout(() => {
-        charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
-        charImg.style.animationName = "";
-        charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
-      }, 3400);
+    setTimeout(() => {
+      charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
+      charImg.setAttribute("src", "./img/char-idle.gif");
+      charImg.style.animationName = "float";
+    }, 7200);
 
-      setTimeout(() => {
-        charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
-        charImg.setAttribute("src", "./img/char-idle.gif");
-        charImg.style.animationName = "float";
-      }, 7200);
-
-      setTimeout(() => {
-        showModal();
-      }, 7200);
-    }
-  });
-}
+    setTimeout(() => {
+      showModal();
+    }, 7200);
+  }
+});
 
 function goAnimation() {
   let delay = 0;
@@ -406,8 +432,8 @@ let chosenItemIndex = [];
 function masterDynamicP(allSelectedItems) {
   const maxWeight = 200;
   const [maxValue, set] = dynamicP(allSelectedItems, maxWeight);
-  console.log(returnIndex(allSelectedItems, set));
-  console.log("Value =", maxValue);
+  // console.log(returnIndex(allSelectedItems, set));
+  // console.log("Value =", maxValue);
   chosenItemIndex = returnIndex(allSelectedItems, set);
 }
 
@@ -648,6 +674,7 @@ function masterGreedy(allSelectedItems) {
   const maxWeight = 200;
   const selec = greedy(allSelectedItems, maxWeight);
   chosenItemIndex = returnIndexGreedy(selec);
+  console.log("in master greedy", chosenItemIndex);
 }
 
 // Greedy
@@ -792,6 +819,8 @@ function showModal() {
   finalMana = getFinalMana(chosenItemIndex);
   finalStatModal.innerHTML = `Stat +${finalStat}%`;
   finalManaModal.innerHTML = finalMana;
+  finalTimeModal.innerHTML = finalTime;
+  charFinalStat.innerHTML = finalStat;
   modalToggleBtn.click();
 }
 
@@ -829,7 +858,13 @@ function showBuffStat() {
   statBuff.style.opacity = 1;
 }
 
+function hideBuffStat() {
+  statBuff.style.transform = "translateY(20px)";
+  statBuff.style.opacity = 0;
+}
+
 closeModalBtn.addEventListener("click", () => {
+  resetBtn.style.visibility = "visible";
   setTimeout(() => {
     boxs.forEach((element, index) => {
       element.removeEventListener(
@@ -871,10 +906,9 @@ closeModalBtn.addEventListener("click", () => {
 
 function getFinalStat(chosenItemIndex) {
   let sum = 0;
-  allSelectedItems.forEach((element, index) => {
+  boxs.forEach((element, index) => {
     if (chosenItemIndex.includes(index)) {
-      console.log(element);
-      sum += element.Value;
+      sum += Number(element.getAttribute("data-stat"));
     }
   });
 
@@ -883,12 +917,47 @@ function getFinalStat(chosenItemIndex) {
 
 function getFinalMana(chosenItemIndex) {
   let sum = 0;
-  allSelectedItems.forEach((element, index) => {
+
+  boxs.forEach((element, index) => {
     if (chosenItemIndex.includes(index)) {
-      console.log(element);
-      sum += element.Weight;
+      sum += Number(element.getAttribute("data-mana"));
     }
   });
 
   return sum;
+}
+
+resetBtn.addEventListener("click", () => {
+  resetBtn.style.visibility = "hidden";
+  isReset++;
+  resetAfterExecute();
+});
+
+function resetAfterExecute() {
+  boxs.forEach((element) => {
+    element.style.pointerEvents = "all";
+    element.style.opacity = "1";
+    element.style.outline = "none";
+    element.children[0].style.opacity = "1";
+    element.parentElement.style.opacity = "1";
+  });
+
+  allDeleteBtn.forEach((element) => {
+    element.style.display = "block";
+    element.style.pointerEvents = "all";
+  });
+
+  // allItemBoxs.forEach((element) => {
+  //   element.style.pointerEvents = "all";
+  // });
+
+  if (!checkIsNotFull(imgSrcArr)) {
+    goBtn.style.opacity = 0.98;
+    goBtn.style.pointerEvents = "all";
+  }
+  itemChosenWrapper.innerHTML = "";
+  modalItemContainer.innerHTML = "";
+  hideBuffStat();
+
+  dropDown.removeAttribute("disabled");
 }

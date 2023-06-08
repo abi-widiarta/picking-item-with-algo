@@ -46,7 +46,8 @@
 .all-box-modal-container {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  column-gap: 10px;
 }
 
 .box-container-modal {
@@ -92,6 +93,7 @@
   display: flex !important;
   justify-content: center !important;
   border: none !important;
+  padding: 0 !important;
 }
 
 .modal-footer button {
