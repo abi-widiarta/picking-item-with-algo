@@ -16,6 +16,9 @@ const charImgAvatar = document.querySelector(".char-img-avatar");
 
 const itemChosenWrapper = document.querySelector(".chosen-wrapper");
 
+const finalStatModal = document.querySelector(".final-stat");
+const finalManaModal = document.querySelector(".final-mana");
+
 let chosenAlgo = "Brute force";
 chosenAlgoUI.textContent = chosenAlgo;
 
@@ -27,6 +30,9 @@ allDeleteBtn.forEach((element) => {
     let indexItemPicked;
 
     element.previousElementSibling.setAttribute("src", "");
+    element.parentElement.removeAttribute("data-bs-original-title");
+
+    console.log(element.parentElement);
     element.style.opacity = 0;
     element.style.pointerEvents = "none";
 
@@ -776,16 +782,37 @@ const modalToggleBtn = document.querySelector(".modal-toggle");
 
 const modalAlgo = document.querySelector(".modal-algo-use");
 
-const boxModalAll = document.querySelectorAll(".box-modal");
+let finalStat;
+let finalMana;
 
 function showModal() {
   populateEffectChosenItemModal();
   modalAlgo.textContent = chosenAlgo;
+  finalStat = getFinalStat(chosenItemIndex);
+  finalMana = getFinalMana(chosenItemIndex);
+  finalStatModal.innerHTML = `Stat +${finalStat}%`;
+  finalManaModal.innerHTML = finalMana;
   modalToggleBtn.click();
+}
+
+const modalItemContainer = document.querySelector(".all-box-modal-container");
+
+function createModalBoxChosenItem() {
+  for (const i in chosenItemIndex) {
+    modalItemContainer.innerHTML += `<div class="box-container-modal">
+    <div class="box-modal">
+      <img src="" alt="" />
+    </div>
+  </div>`;
+  }
 }
 
 function populateEffectChosenItemModal() {
   let chosenItemSrc = extractBestItemSrc(chosenItemIndex);
+
+  createModalBoxChosenItem();
+
+  const boxModalAll = document.querySelectorAll(".box-modal");
 
   boxModalAll.forEach((element, index) => {
     element.children[0].setAttribute("src", chosenItemSrc[index]);
@@ -837,6 +864,31 @@ closeModalBtn.addEventListener("click", () => {
     allDeleteBtn.forEach((element) => {
       element.style.display = "none";
     });
+
     showBuffStat();
   }, 350);
 });
+
+function getFinalStat(chosenItemIndex) {
+  let sum = 0;
+  allSelectedItems.forEach((element, index) => {
+    if (chosenItemIndex.includes(index)) {
+      console.log(element);
+      sum += element.Value;
+    }
+  });
+
+  return sum;
+}
+
+function getFinalMana(chosenItemIndex) {
+  let sum = 0;
+  allSelectedItems.forEach((element, index) => {
+    if (chosenItemIndex.includes(index)) {
+      console.log(element);
+      sum += element.Weight;
+    }
+  });
+
+  return sum;
+}
