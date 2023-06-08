@@ -113,10 +113,6 @@ body {
   background: #ead4aab9;
 }
 
-.tooltip .arrow::before {
-  border-top-color: #f7f7f7 !important;
-}
-
 .tooltip .tooltip-inner {
   background-color: #f7f7f7;
   color: #000;
@@ -134,8 +130,24 @@ body {
   font-size: 16px;
 }
 
+/* [data-bs-placement="left"] > .tooltip-arrow::before {
+  border-top-color: #f7f7f7 !important;
+} */
+
+.tooltip-arrow::before {
+  border-top-color: #f7f7f7 !important;
+}
+
 .tooltip-arrow::before {
   border-left-color: #f7f7f7 !important;
+}
+
+.tooltip-arrow::before {
+  border-right-color: #f7f7f7 !important;
+}
+
+.tooltip-arrow::before {
+  border-bottom-color: #f7f7f7 !important;
 }
 
 /* Modal */

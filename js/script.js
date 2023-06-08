@@ -86,9 +86,6 @@ boxs.forEach((element, index) => {
     console.log(element.getAttribute("data-tier"));
     disableOtherTier(element.getAttribute("data-tier"));
 
-    // console.log(allItemBoxs.getAttribute("data-tier"));
-    // console.log(Array.from(allItemBoxs));
-
     if (currOutline == undefined) {
       element.style.outline = "4px solid white";
       currOutline = element;
@@ -181,6 +178,14 @@ function setTest() {
             boxs[indexItemToSet].setAttribute("data-item-name", element.getAttribute("data-item-name"));
             boxs[indexItemToSet].setAttribute("data-stat", element.getAttribute("data-stat"));
             boxs[indexItemToSet].setAttribute("data-mana", element.getAttribute("data-mana"));
+            boxs[indexItemToSet].setAttribute(
+              "data-bs-original-title",
+              `<p class='tooltip-title'>Imperial Sword</p>
+            <p>Stat ${element.getAttribute("data-stat")}%</p>
+            <p>Req mana : ${element.getAttribute("data-mana")}</p>
+            <p>Class : ${element.getAttribute("data-tier")}</p>
+            `
+            );
 
             console.log("tes", boxs[indexItemToSet]);
             console.log("el", element);
@@ -199,6 +204,14 @@ function setTest() {
             boxs[indexItemToSet].setAttribute("data-item-name", element.getAttribute("data-item-name"));
             boxs[indexItemToSet].setAttribute("data-stat", element.getAttribute("data-stat"));
             boxs[indexItemToSet].setAttribute("data-mana", element.getAttribute("data-mana"));
+            boxs[indexItemToSet].setAttribute(
+              "data-bs-original-title",
+              `<p class='tooltip-title'>Imperial Sword</p>
+            <p>Stat ${element.getAttribute("data-stat")}%</p>
+            <p>Req mana : ${element.getAttribute("data-mana")}</p>
+            <p>Class : ${element.getAttribute("data-tier")}</p>
+            `
+            );
 
             let indexItemBefore = boxs[indexItemToSet].children[0].getAttribute("data-item-number");
 
@@ -249,6 +262,10 @@ function goListener() {
 
     if (chosenAlgo == "D.programming") {
       masterDynamicP(allSelectedItems);
+    } else if (chosenAlgo == "Brute force") {
+      masterBruteForce(allSelectedItems);
+    } else if (chosenAlgo == "Greedy") {
+      masterGreedy(allSelectedItems);
     }
 
     boxs.forEach((element) => {
@@ -309,6 +326,23 @@ function goListener() {
       setTimeout(() => {
         showModal();
       }, 9800);
+    } else if (chosenItemIndex.length == 2) {
+      console.log("3");
+      setTimeout(() => {
+        charImg.setAttribute("src", "./img/char-power-up-slowed.gif");
+        charImg.style.animationName = "";
+        charImgAvatar.setAttribute("src", "./img/char-power-up-slowed-avatar.gif");
+      }, 3400);
+
+      setTimeout(() => {
+        charImgAvatar.setAttribute("src", "./img/char-idle-avatar.gif");
+        charImg.setAttribute("src", "./img/char-idle.gif");
+        charImg.style.animationName = "float";
+      }, 7200);
+
+      setTimeout(() => {
+        showModal();
+      }, 7200);
     }
   });
 }
@@ -361,6 +395,8 @@ function goAnimation() {
 
 // BEST ITEMS LOGIC
 let chosenItemIndex = [];
+
+// MASTER DP
 function masterDynamicP(allSelectedItems) {
   const maxWeight = 200;
   const [maxValue, set] = dynamicP(allSelectedItems, maxWeight);
@@ -369,6 +405,7 @@ function masterDynamicP(allSelectedItems) {
   chosenItemIndex = returnIndex(allSelectedItems, set);
 }
 
+// DP
 function dynamicP(coins, maxWeight) {
   const n = coins.length;
   if (n === 0) {
@@ -418,10 +455,261 @@ function returnIndex(coins, selec) {
   return indexes;
 }
 
-// function getBestItem() {
-//   let bestItemIndex = [0, 2, 4, 6];
-//   return bestItemIndex;
-// }
+// MAIN BRUTEFORCE
+
+function masterBruteForce(allSelectedItems) {
+  var sets = [];
+  bruteForce(allSelectedItems, 0, 0, 0, [], sets);
+
+  var maxWeight = 200;
+
+  var set = validasi(sets, allSelectedItems, maxWeight);
+  chosenItemIndex = returnIndexBf(allSelectedItems, set);
+}
+
+// BRUTEFORCE
+function bruteForce(coins, index, currentWeight, currentSum, currentSet, sets) {
+  if (index >= coins.length) {
+    sets.push(currentSet);
+    return;
+  }
+
+  // Tidak memilih koin saat ini
+  bruteForce(coins, index + 1, currentWeight, currentSum, currentSet, sets);
+
+  // Memilih koin saat ini jika bobotnya tidak melebihi batas berat
+  if (currentWeight + coins[index].Weight <= 500) {
+    const newSet = [...currentSet, coins[index]];
+    bruteForce(coins, index + 1, currentWeight + coins[index].Weight, currentSum + coins[index].Value, newSet, sets);
+  }
+}
+
+function search(coins, cari) {
+  let temp = 0;
+  for (let i = 0; i < coins.length; i++) {
+    if (coins[i] === cari) {
+      temp = i;
+      break;
+    }
+  }
+  return temp;
+}
+
+function validasi(sets, coins, weight) {
+  let temp = 0;
+  let index;
+  let setTemp = [];
+  for (const set of sets) {
+    if (set.length === 1) {
+      if (set[0].Weight <= weight) {
+        if (set[0].Value > temp) {
+          temp = set[0].Value;
+          setTemp = set;
+        }
+      }
+    } else if (set.length === 2) {
+      if (coins[0] === set[0]) {
+        if (set[1] !== coins[1]) {
+          if (set[0].Weight + set[1].Weight <= weight) {
+            if (set[0].Value + set[1].Value > temp) {
+              temp = set[0].Value + set[1].Value;
+              setTemp = set;
+            }
+          }
+        }
+      } else if (coins[7] === set[1]) {
+        if (set[0] !== coins[6]) {
+          if (set[0].Weight + set[1].Weight <= weight) {
+            if (set[0].Value + set[1].Value > temp) {
+              temp = set[0].Value + set[1].Value;
+              setTemp = set;
+            }
+          }
+        }
+      } else {
+        index = search(coins, set[0]);
+        if (set[1] !== coins[index + 1] && set[1] !== coins[index - 1]) {
+          if (set[0].Weight + set[1].Weight <= weight) {
+            if (set[0].Value + set[1].Value > temp) {
+              temp = set[0].Value + set[1].Value;
+              setTemp = set;
+            }
+          }
+        }
+      }
+    } else if (set.length === 3) {
+      if (coins[0] === set[0]) {
+        if (set[1] !== coins[1]) {
+          index = search(coins, set[1]);
+          if (set[2] !== coins[index + 1]) {
+            if (set[0].Weight + set[1].Weight + set[2].Weight <= weight) {
+              if (set[0].Value + set[1].Value + set[2].Value > temp) {
+                temp = set[0].Value + set[1].Value + set[2].Value;
+                setTemp = set;
+              }
+            }
+          }
+        }
+      } else if (coins[7] === set[2]) {
+        if (set[1] !== coins[6]) {
+          index = search(coins, set[1]);
+          if (set[0] !== coins[index - 1]) {
+            if (set[0].Weight + set[1].Weight + set[2].Weight <= weight) {
+              if (set[0].Value + set[1].Value + set[2].Value > temp) {
+                temp = set[0].Value + set[1].Value + set[2].Value;
+                setTemp = set;
+              }
+            }
+          }
+        }
+      } else {
+        index = search(coins, set[0]);
+        if (set[1] !== coins[index + 1] && set[1] !== coins[index - 1]) {
+          index = search(coins, set[1]);
+          if (set[2] !== coins[index + 1] && set[2] !== coins[index - 1]) {
+            if (set[0].Weight + set[1].Weight + set[2].Weight <= weight) {
+              if (set[0].Value + set[1].Value + set[2].Value > temp) {
+                temp = set[0].Value + set[1].Value + set[2].Value;
+                setTemp = set;
+              }
+            }
+          }
+        }
+      }
+    } else if (set.length === 4) {
+      if (coins[0] === set[0]) {
+        if (set[1] !== coins[1]) {
+          index = search(coins, set[1]);
+          if (set[2] !== coins[index + 1]) {
+            index = search(coins, set[2]);
+            if (set[3] !== coins[index + 1]) {
+              if (set[0].Weight + set[1].Weight + set[2].Weight + set[3].Weight <= weight) {
+                if (set[0].Value + set[1].Value + set[2].Value + set[3].Value > temp) {
+                  temp = set[0].Value + set[1].Value + set[2].Value + set[3].Value;
+                  setTemp = set;
+                }
+              }
+            }
+          }
+        }
+      } else if (coins[7] === set[2]) {
+        if (set[1] !== coins[6]) {
+          index = search(coins, set[1]);
+          if (set[0] !== coins[index - 1]) {
+            index = search(coins, set[1]);
+            if (set[1] !== coins[index - 1]) {
+              if (set[0].Weight + set[1].Weight + set[2].Weight + set[3].Weight <= weight) {
+                if (set[0].Value + set[1].Value + set[2].Value + set[3].Value > temp) {
+                  temp = set[0].Value + set[1].Value + set[2].Value + set[3].Value;
+                  setTemp = set;
+                }
+              }
+            }
+          }
+        }
+      } else {
+        index = search(coins, set[0]);
+        if (set[1] !== coins[index + 1] && set[1] !== coins[index - 1]) {
+          index = search(coins, set[1]);
+          if (set[2] !== coins[index + 1] && set[2] !== coins[index - 1]) {
+            index = search(coins, set[2]);
+            if (set[3] !== coins[index + 1] && set[3] !== coins[index - 1]) {
+              if (set[0].Weight + set[1].Weight + set[2].Weight + set[3].Weight <= weight) {
+                if (set[0].Value + set[1].Value + set[2].Value + set[3].Value > temp) {
+                  temp = set[0].Value + set[1].Value + set[2].Value + set[3].Value;
+                  setTemp = set;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return setTemp;
+}
+
+function returnIndexBf(coins, selec) {
+  var index = [];
+  for (var i = 0; i < selec.length; i++) {
+    index.push(search(coins, selec[i]));
+  }
+  return index;
+}
+
+// masterGreedy
+function masterGreedy(allSelectedItems) {
+  const maxWeight = 200;
+  const selec = greedy(allSelectedItems, maxWeight);
+  chosenItemIndex = returnIndexGreedy(selec);
+}
+
+// Greedy
+class Coin {
+  constructor(Weight, Value, Tier) {
+    this.Weight = Weight;
+    this.Value = Value;
+    this.Tier = Tier;
+  }
+}
+
+function searchMax(coinz) {
+  let tempv = 0;
+  let temp = 0;
+  for (let i = 0; i < 8; i++) {
+    if (coinz[i].Value > tempv) {
+      temp = i;
+      tempv = coinz[i].Value;
+    }
+  }
+  return temp;
+}
+
+function greedy(coinz, maxWeight) {
+  const selec = new Array(8);
+  for (let i = 0; i < 8; i++) {
+    selec[i] = new Coin(0, 0, "");
+  }
+  let Value = 0;
+  let max = 0;
+  for (let i = 0; i < 8; i++) {
+    max = searchMax(coinz);
+    if (max === 7) {
+      if (selec[max - 1].Value === 0 && maxWeight > coinz[max].Weight) {
+        selec[max].Value = coinz[max].Value;
+        selec[max].Weight = coinz[max].Weight;
+        Value += coinz[max].Value;
+        maxWeight -= selec[max].Weight;
+      }
+    } else if (max === 0) {
+      if (selec[max + 1].Value === 0 && maxWeight > coinz[max].Weight) {
+        selec[max].Value = coinz[max].Value;
+        selec[max].Weight = coinz[max].Weight;
+        Value += coinz[max].Value;
+        maxWeight -= selec[max].Weight;
+      }
+    } else {
+      if (selec[max + 1].Value === 0 && selec[max - 1].Value === 0 && maxWeight > coinz[max].Weight) {
+        selec[max].Value = coinz[max].Value;
+        selec[max].Weight = coinz[max].Weight;
+        Value += coinz[max].Value;
+        maxWeight -= selec[max].Weight;
+      }
+    }
+    coinz[max].Value = 0;
+  }
+  return selec;
+}
+
+function returnIndexGreedy(selec) {
+  const index = [];
+  for (let i = 0; i < 8; i++) {
+    if (selec[i].Value !== 0) {
+      index.push(i);
+    }
+  }
+  return index;
+}
 
 function extractBestItemSrc(chosenItemIndex) {
   let bestItemSrc = [];
@@ -516,6 +804,39 @@ function showBuffStat() {
 
 closeModalBtn.addEventListener("click", () => {
   setTimeout(() => {
+    boxs.forEach((element, index) => {
+      element.removeEventListener(
+        "click",
+        () => {
+          indexItemToSet = index;
+          currPicked = element;
+
+          console.log(element.getAttribute("data-tier"));
+          disableOtherTier(element.getAttribute("data-tier"));
+
+          if (currOutline == undefined) {
+            element.style.outline = "4px solid white";
+            currOutline = element;
+          } else {
+            currOutline.style.outline = "0px solid white";
+            element.style.outline = "4px solid white";
+            currOutline = element;
+          }
+
+          setAllowTrue();
+          setTest();
+        },
+        true
+      );
+    });
+
+    boxs.forEach((element) => {
+      element.style.pointerEvents = "all";
+    });
+
+    allDeleteBtn.forEach((element) => {
+      element.style.display = "none";
+    });
     showBuffStat();
   }, 350);
 });
