@@ -1,6 +1,6 @@
 @font-face {
   font-family: "minecraft";
-  src: url("D:/1. KULIAH/KULIAH MATERI/SEMESTER 4/SA/SA ASSET/FONT/minecraft/Minecraft.ttf") format("truetype");
+  src: url("../font/Minecraft.ttf");
 }
 
 * {
