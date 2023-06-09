@@ -37,7 +37,7 @@ allDeleteBtn.forEach((element) => {
     element.previousElementSibling.setAttribute("src", "");
     element.parentElement.removeAttribute("data-bs-original-title");
 
-    console.log(element.parentElement);
+    // console.log(element.parentElement);
     element.style.opacity = 0;
     element.style.pointerEvents = "none";
 
@@ -123,7 +123,7 @@ boxs.forEach((element, index) => {
 function enableChosenTier(tier) {
   allItemBoxs.forEach((element) => {
     if (element.getAttribute("data-tier") == tier) {
-      console.log("yes2");
+      // console.log("yes2");
       element.parentElement.style.pointerEvents = "all";
       element.style.pointerEvents = "all";
     }
@@ -147,7 +147,7 @@ function disableOtherTier(tier) {
       }
     });
   } else if (prevtier != tier) {
-    console.log("yes");
+    // console.log("yes");
     allItemBoxs.forEach((element) => {
       if (element.getAttribute("data-tier") == tier) {
         element.parentElement.style.pointerEvents = "all";
@@ -217,8 +217,8 @@ function setTest() {
             `
             );
 
-            console.log("tes", boxs[indexItemToSet]);
-            console.log("el", element);
+            // console.log("tes", boxs[indexItemToSet]);
+            // console.log("el", element);
 
             element.style.opacity = "0.4";
             element.style.pointerEvents = "none";
@@ -288,19 +288,22 @@ goBtn.addEventListener("click", () => {
     allSelectedItems.push({ Name: element.getAttribute("data-item-name"), Tier: element.getAttribute("data-tier"), Value: Number(element.getAttribute("data-stat")), Weight: Number(element.getAttribute("data-mana")) });
   });
 
-  console.log("all selected items : ", allSelectedItems);
+  // console.log("all selected items : ", allSelectedItems);
 
   if (chosenAlgo == "D.programming") {
     startTime = performance.now();
     masterDynamicP(allSelectedItems);
+    console.log("Algo used : Dp");
     finalTime = performance.now() - startTime;
   } else if (chosenAlgo == "Brute force") {
     startTime = performance.now();
     masterBruteForce(allSelectedItems);
+    console.log("Algo used : BruteForce");
     finalTime = performance.now() - startTime;
   } else if (chosenAlgo == "Greedy") {
     startTime = performance.now();
     masterGreedy(allSelectedItems);
+    console.log("Algo used : Greedy");
     finalTime = performance.now() - startTime;
   }
 
@@ -674,7 +677,6 @@ function masterGreedy(allSelectedItems) {
   const maxWeight = 200;
   const selec = greedy(allSelectedItems, maxWeight);
   chosenItemIndex = returnIndexGreedy(selec);
-  console.log("in master greedy", chosenItemIndex);
 }
 
 // Greedy
@@ -772,7 +774,6 @@ function highlightBestItem(chosenItemIndex) {
 function populateEffectChosenItem() {
   const boxContainerChosen = document.querySelectorAll(".box-container-chosen");
   let chosenItemSrc = extractBestItemSrc(chosenItemIndex);
-  console.log(chosenItemSrc);
 
   boxContainerChosen.forEach((element, index) => {
     element.children[0].children[0].setAttribute("src", chosenItemSrc[index]);
@@ -873,7 +874,6 @@ closeModalBtn.addEventListener("click", () => {
           indexItemToSet = index;
           currPicked = element;
 
-          console.log(element.getAttribute("data-tier"));
           disableOtherTier(element.getAttribute("data-tier"));
 
           if (currOutline == undefined) {
