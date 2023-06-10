@@ -710,21 +710,21 @@ function greedy(coinz, maxWeight) {
   for (let i = 0; i < 8; i++) {
     max = searchMax(coinz);
     if (max === 7) {
-      if (selec[max - 1].Value === 0 && maxWeight > coinz[max].Weight) {
+      if (selec[max - 1].Value === 0 && maxWeight >= coinz[max].Weight) {
         selec[max].Value = coinz[max].Value;
         selec[max].Weight = coinz[max].Weight;
         Value += coinz[max].Value;
         maxWeight -= selec[max].Weight;
       }
     } else if (max === 0) {
-      if (selec[max + 1].Value === 0 && maxWeight > coinz[max].Weight) {
+      if (selec[max + 1].Value === 0 && maxWeight >= coinz[max].Weight) {
         selec[max].Value = coinz[max].Value;
         selec[max].Weight = coinz[max].Weight;
         Value += coinz[max].Value;
         maxWeight -= selec[max].Weight;
       }
     } else {
-      if (selec[max + 1].Value === 0 && selec[max - 1].Value === 0 && maxWeight > coinz[max].Weight) {
+      if (selec[max + 1].Value === 0 && selec[max - 1].Value === 0 && maxWeight >= coinz[max].Weight) {
         selec[max].Value = coinz[max].Value;
         selec[max].Weight = coinz[max].Weight;
         Value += coinz[max].Value;
