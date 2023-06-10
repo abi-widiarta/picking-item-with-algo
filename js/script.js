@@ -210,7 +210,7 @@ function setTest() {
             boxs[indexItemToSet].setAttribute("data-mana", element.getAttribute("data-mana"));
             boxs[indexItemToSet].setAttribute(
               "data-bs-original-title",
-              `<p class='tooltip-title'>Imperial Sword</p>
+              `<p class='tooltip-title'>${element.getAttribute("data-item-name")}</p>
             <p>Stat ${element.getAttribute("data-stat")}%</p>
             <p>Req mana : ${element.getAttribute("data-mana")}</p>
             <p>Class : ${element.getAttribute("data-tier")}</p>
@@ -236,7 +236,7 @@ function setTest() {
             boxs[indexItemToSet].setAttribute("data-mana", element.getAttribute("data-mana"));
             boxs[indexItemToSet].setAttribute(
               "data-bs-original-title",
-              `<p class='tooltip-title'>Imperial Sword</p>
+              `<p class='tooltip-title'>${element.getAttribute("data-item-name")}</p>
             <p>Stat ${element.getAttribute("data-stat")}%</p>
             <p>Req mana : ${element.getAttribute("data-mana")}</p>
             <p>Class : ${element.getAttribute("data-tier")}</p>
